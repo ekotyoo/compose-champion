@@ -5,11 +5,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ekotyoo.composechampion.ui.navigation.Screen
+import com.ekotyoo.composechampion.ui.navigation.createNavGraph
 import com.ekotyoo.composechampion.ui.screens.detail.AboutScreen
 import com.ekotyoo.composechampion.ui.screens.home.HomeScreen
 
@@ -25,21 +27,7 @@ fun MovieApp(
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen(
-                    onNavigateToAboutScreen = {
-                        navController.navigate(Screen.About.route) {
-                            launchSingleTop = true
-                        }
-                    },
-                )
-            }
-            composable(Screen.About.route) {
-                AboutScreen()
-            }
-            composable(Screen.MovieDetail.route) {
-
-            }
+            createNavGraph(navController)
         }
     }
 }
