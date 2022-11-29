@@ -1,4 +1,4 @@
-package com.ekotyoo.composechampion.ui.screens.detail
+package com.ekotyoo.composechampion.ui.screens.about
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
