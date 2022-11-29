@@ -9,4 +9,5 @@ data class MovieDetail(
     val isFavorite: Boolean,
     val image: String,
     val overview: String,
+    val rating: Float
 )

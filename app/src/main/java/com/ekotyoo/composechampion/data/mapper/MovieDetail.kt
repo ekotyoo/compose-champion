@@ -3,15 +3,16 @@ package com.ekotyoo.composechampion.data.mapper
 import com.ekotyoo.composechampion.domain.model.MovieDetail
 import com.ekotyoo.composechampion.ui.screens.detail.model.MovieDetailUiModel
 
-fun MovieDetailUiModel.fromDomain(movie: MovieDetail): MovieDetailUiModel {
+fun MovieDetail.toUiModel(): MovieDetailUiModel {
     return MovieDetailUiModel(
-        id = movie.id,
-        title = movie.title,
-        year = movie.year,
-        genre = movie.genre,
-        cast = movie.cast,
-        isFavorite = movie.isFavorite,
-        image = movie.image,
-        overview = movie.overview,
+        id = this.id,
+        title = this.title,
+        year = this.year,
+        genre = this.genre,
+        cast = this.cast.map { it.toUiModel() },
+        isFavorite = this.isFavorite,
+        image = this.image,
+        overview = this.overview,
+        rating = this.rating
     )
 }

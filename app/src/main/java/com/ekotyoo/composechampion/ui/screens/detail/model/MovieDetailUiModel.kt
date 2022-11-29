@@ -9,4 +9,5 @@ data class MovieDetailUiModel(
     val isFavorite: Boolean,
     val image: String,
     val overview: String,
+    val rating: Float,
 )
