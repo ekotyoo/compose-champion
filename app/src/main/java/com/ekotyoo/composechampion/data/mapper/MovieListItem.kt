@@ -4,6 +4,7 @@ import com.ekotyoo.composechampion.ui.screens.home.model.MovieListItemUiModel
 
 fun MovieListItemUiModel.toUiModel(): MovieListItemUiModel {
     return MovieListItemUiModel(
+        id = this.id,
         title = this.title,
         rating = this.rating,
         genre = this.genre,

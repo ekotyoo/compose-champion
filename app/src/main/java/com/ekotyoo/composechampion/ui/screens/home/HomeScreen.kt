@@ -32,10 +32,12 @@ import kotlin.random.Random
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateToAboutScreen: () -> Unit,
+    onNavigateToDetailScreen: (String) -> Unit,
 ) {
     val movies: List<MovieListItemUiModel> = remember {
         List(10) {
             MovieListItemUiModel(
+                id = it.toString(),
                 title = "Title $it",
                 rating = (Random.nextFloat() * 10),
                 genre = listOf("Genre 1", "Genre 2", "Genre 3"),
@@ -45,7 +47,12 @@ fun HomeScreen(
         }
     }
 
-    HomeScreen(modifier = modifier, movies = movies, onNavigateToAboutScreen = onNavigateToAboutScreen)
+    HomeScreen(
+        modifier = modifier,
+        movies = movies,
+        onNavigateToAboutScreen = onNavigateToAboutScreen,
+        onNavigateToDetailScreen = onNavigateToDetailScreen,
+    )
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -54,6 +61,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     movies: List<MovieListItemUiModel>,
     onNavigateToAboutScreen: () -> Unit,
+    onNavigateToDetailScreen: (String) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -67,14 +75,19 @@ fun HomeScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             item {
-                Header(onSearchValueChange = {}, searchValue = "", onNavigateToAboutScreen = onNavigateToAboutScreen)
+                Header(onSearchValueChange = {},
+                    searchValue = "",
+                    onNavigateToAboutScreen = onNavigateToAboutScreen)
             }
-            items(movies, key = { it.title }) {
-                MovieCard(title = it.title,
+            items(movies, key = { it.id }) {
+                MovieCard(
+                    title = it.title,
                     year = it.year,
                     rating = it.rating,
                     image = it.image,
-                    genres = it.genre)
+                    genres = it.genre,
+                    onClick = { onNavigateToDetailScreen(it.id) }
+                )
             }
         }
         AnimatedVisibility(
