@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ComposeChampion</string>
+    <string name="desc_favorite_button">Toggle favorite button</string>
+    <string name="desc_about_button">Navigate to about screen button</string>
+    <string name="desc_scroll_top_button">Scroll to top button</string>
+    <string name="label_search_movie">Cari film</string>
+</resources>
