@@ -2,11 +2,10 @@ package com.ekotyoo.composechampion.ui.screens.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,13 +15,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ekotyoo.composechampion.R
-import com.ekotyoo.composechampion.ui.screens.detail.components.CastCard
+import com.ekotyoo.composechampion.ui.screens.detail.components.CastList
+import com.ekotyoo.composechampion.ui.screens.detail.components.MovieHeader
+import com.ekotyoo.composechampion.ui.screens.detail.components.MovieOverview
 import com.ekotyoo.composechampion.ui.screens.detail.model.CastUiModel
 import com.ekotyoo.composechampion.ui.theme.ComposeChampionTheme
 
@@ -98,103 +97,6 @@ fun MovieDetailScreen(
                 imageVector = Icons.Rounded.ArrowBack,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 contentDescription = stringResource(id = R.string.desc_back_button),
-            )
-        }
-    }
-}
-
-@Composable
-fun CastList(
-    casts: List<CastUiModel>,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(id = R.string.label_cast),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            items(casts) {
-                CastCard(name = it.name, playedAs = "Unknown", image = it.image)
-            }
-        }
-    }
-}
-
-@Composable
-fun MovieOverview(
-    overview: String,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(id = R.string.label_overview),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = overview,
-            maxLines = 4,
-            style = MaterialTheme.typography.bodySmall,
-            overflow = TextOverflow.Ellipsis,
-        )
-    }
-}
-
-@Composable
-fun MovieHeader(
-    title: String,
-    rating: Float,
-    year: Int,
-    genre: String,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = title,
-            maxLines = 3,
-            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.Star,
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = "$rating |",
-                style = MaterialTheme.typography.labelMedium,
-                maxLines = 2, overflow = TextOverflow.Ellipsis,
-            )
-            Icon(
-                imageVector = Icons.Rounded.CalendarMonth,
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = "$year |",
-                style = MaterialTheme.typography.labelMedium,
-                maxLines = 2, overflow = TextOverflow.Ellipsis,
-            )
-            Icon(
-                imageVector = Icons.Rounded.Movie,
-                tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = genre,
-                style = MaterialTheme.typography.labelMedium,
-                maxLines = 2, overflow = TextOverflow.Ellipsis,
             )
         }
     }
