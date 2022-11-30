@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
@@ -16,12 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.composechampion.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Header(
+fun SearchHeader(
     modifier: Modifier = Modifier,
     onSearchValueChange: (String) -> Unit,
     searchValue: String,
@@ -33,6 +34,7 @@ fun Header(
             label = { Text(text = stringResource(id = R.string.label_search_movie)) },
             onValueChange = onSearchValueChange,
             maxLines = 1,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Rounded.Search,
