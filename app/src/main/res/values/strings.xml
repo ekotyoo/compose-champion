@@ -5,4 +5,7 @@
     <string name="desc_scroll_top_button">Scroll to top button</string>
     <string name="label_search_movie">Cari film</string>
     <string name="desc_movie_not_found">Film tidak ditemukan</string>
+    <string name="label_overview">Overview</string>
+    <string name="label_cast">Casts</string>
+    <string name="desc_back_button">Navigate back</string>
 </resources>

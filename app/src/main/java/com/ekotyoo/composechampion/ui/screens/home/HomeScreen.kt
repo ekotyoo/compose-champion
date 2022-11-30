@@ -1,6 +1,8 @@
 package com.ekotyoo.composechampion.ui.screens.home
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.composechampion.R
 import com.ekotyoo.composechampion.common.UiState
-import com.ekotyoo.composechampion.ui.screens.home.components.Header
+import com.ekotyoo.composechampion.ui.screens.home.components.SearchHeader
 import com.ekotyoo.composechampion.ui.screens.home.components.MovieCard
 import com.ekotyoo.composechampion.ui.screens.home.model.MovieListItemUiModel
 import kotlinx.coroutines.launch
@@ -53,7 +55,7 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -76,7 +78,7 @@ fun HomeScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             item {
-                Header(
+                SearchHeader(
                     onSearchValueChange = onSearchValueChange,
                     searchValue = searchQuery,
                     onNavigateToAboutScreen = onNavigateToAboutScreen,
@@ -102,7 +104,8 @@ fun HomeScreen(
                         isFavorite = it.isFavorite,
                         onFavorite = {
                             onFavoriteClick(it.id, it.isFavorite)
-                        }
+                        },
+                        modifier = Modifier.animateItemPlacement(tween(200))
                     )
                 }
             }
