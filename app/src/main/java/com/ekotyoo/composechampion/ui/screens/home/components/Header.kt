@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -52,7 +53,7 @@ fun Header(
             .background(color = MaterialTheme.colorScheme.surfaceVariant),
             onClick = onNavigateToAboutScreen) {
             Icon(
-                imageVector = Icons.Rounded.Info,
+                imageVector = Icons.Rounded.Person,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 contentDescription = stringResource(id = R.string.desc_about_button),
             )
