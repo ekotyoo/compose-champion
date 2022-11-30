@@ -1,4 +1,4 @@
-package com.ekotyoo.composechampion.data.mapper
+package com.ekotyoo.composechampion.ui.mapper
 
 import com.ekotyoo.composechampion.domain.model.MovieDetail
 import com.ekotyoo.composechampion.ui.screens.detail.model.MovieDetailUiModel
