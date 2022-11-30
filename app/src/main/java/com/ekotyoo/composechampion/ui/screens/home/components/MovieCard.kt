@@ -15,11 +15,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ekotyoo.composechampion.R
 import com.ekotyoo.composechampion.ui.theme.ComposeChampionTheme
+import com.ekotyoo.composechampion.ui.theme.Red40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,8 +57,17 @@ fun MovieCard(
                     .weight(1f)
                     .fillMaxHeight(),
             ) {
-                Text(text = title, style = MaterialTheme.typography.titleLarge)
-                Text(text = "$year | $genresText", style = MaterialTheme.typography.labelMedium)
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    text = "$year | $genresText",
+                    style = MaterialTheme.typography.labelMedium,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis,
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -81,6 +92,7 @@ fun MovieCard(
                 Icon(
                     imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Outlined.Favorite,
                     contentDescription = stringResource(id = R.string.desc_favorite_button),
+                    tint = if (isFavorite) Red40 else Color.Unspecified
                 )
             }
         }
