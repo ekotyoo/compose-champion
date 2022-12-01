@@ -4,8 +4,9 @@ import com.ekotyoo.composechampion.domain.model.Cast
 import com.ekotyoo.composechampion.domain.model.MovieDetail
 import com.ekotyoo.composechampion.domain.model.MovieListItem
 
-object FakeMovieDataSource {
-    fun getMovieDetailData(): List<MovieDetail> = listOf(
+class FakeMovieDataSource {
+
+    private val _movieDetail: MutableList<MovieDetail> = mutableListOf(
         MovieDetail(
             id = "1",
             title = "The Shawshank Redemption",
@@ -141,7 +142,7 @@ object FakeMovieDataSource {
         )
     )
 
-    fun getMovieData(): List<MovieListItem> = getMovieDetailData().map {
+    private val _movieList: MutableList<MovieListItem> = _movieDetail.map {
         MovieListItem(
             id = it.id,
             title = it.title,
@@ -151,5 +152,20 @@ object FakeMovieDataSource {
             rating = it.rating,
             image = it.image,
         )
+    }.toMutableList()
+
+    fun getMovies(query: String = ""): List<MovieListItem> = _movieList
+        .filter { it.title.contains(query, ignoreCase = true) }
+
+    fun getMovieDetail(movieId: String): MovieDetail? = _movieDetail
+        .firstOrNull { it.id == movieId }
+
+    fun favoriteMovie(movieId: String, isFavorite: Boolean): Boolean {
+        val index = _movieList.indexOfFirst { it.id == movieId }
+        if (index >= 0) {
+            _movieList[index] = _movieList[index].copy(isFavorite = isFavorite)
+            return true
+        }
+        return false
     }
 }
