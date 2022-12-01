@@ -8,7 +8,9 @@ import com.ekotyoo.composechampion.domain.usecase.GetMovieDetailUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMoviesUseCase
 
 object Injection {
-    private fun provideDataSource(): FakeMovieDataSource = FakeMovieDataSource
+
+    private fun provideDataSource(): FakeMovieDataSource = FakeMovieDataSource()
+
     private fun provideMovieRepository(): MovieRepository =
         FakeMovieRepositoryImpl.getInstance(provideDataSource())
 

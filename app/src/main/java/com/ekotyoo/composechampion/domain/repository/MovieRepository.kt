@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     fun getMovies(query: String): Flow<List<MovieListItem>>
-    fun getMovieDetail(movieId: String): Flow<MovieDetail>
+    fun getMovieDetail(movieId: String): Flow<MovieDetail?>
     fun favoriteMovie(movieId: String, isFavorite: Boolean): Flow<Boolean>
 }
