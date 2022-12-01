@@ -1,13 +1,11 @@
 package com.ekotyoo.composechampion.data.repository
 
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.toLowerCase
 import com.ekotyoo.composechampion.data.fake.FakeMovieDataSource
 import com.ekotyoo.composechampion.domain.model.MovieDetail
 import com.ekotyoo.composechampion.domain.model.MovieListItem
 import com.ekotyoo.composechampion.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class FakeMovieRepositoryImpl(dataSource: FakeMovieDataSource) : MovieRepository {
@@ -20,22 +18,22 @@ class FakeMovieRepositoryImpl(dataSource: FakeMovieDataSource) : MovieRepository
         _movieDetail.addAll(dataSource.getMovieDetailData())
     }
 
-    override fun getMovies(query: String): Flow<List<MovieListItem>> {
-        return flowOf(_movies.filter { it.title.contains(query.toLowerCase(Locale.current)) })
+    override fun getMovies(query: String): Flow<List<MovieListItem>> = flow {
+        emit(_movies.filter { it.title.contains(query, ignoreCase = true) })
     }
 
-    override fun getMovieDetail(movieId: String): Flow<MovieDetail> {
-        return flowOf(_movieDetail.first { it.id == movieId })
-            .map { it.copy(isFavorite = _movies.first { m -> m.id == movieId }.isFavorite) }
-    }
+    override fun getMovieDetail(movieId: String): Flow<MovieDetail> = flow {
+        emit(_movieDetail.first { it.id == movieId })
+    }.map { it.copy(isFavorite = _movies.first { m -> m.id == movieId }.isFavorite) }
 
-    override fun favoriteMovie(movieId: String, isFavorite: Boolean): Flow<Boolean> {
+    override fun favoriteMovie(movieId: String, isFavorite: Boolean): Flow<Boolean> = flow {
         val index = _movies.indexOfFirst { it.id == movieId }
         if (index >= 0) {
             _movies[index] = _movies[index].copy(isFavorite = isFavorite)
-            return flowOf(true)
+            emit(true)
+            return@flow
         }
-        return flowOf(false)
+        emit(false)
     }
 
     companion object {
