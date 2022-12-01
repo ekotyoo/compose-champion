@@ -3,11 +3,10 @@ package com.ekotyoo.composechampion.ui.screens.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.composechampion.common.UiState
+import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.domain.usecase.AddMovieToFavoriteUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMovieDetailUseCase
 import com.ekotyoo.composechampion.ui.mapper.toUiModel
-import com.ekotyoo.composechampion.ui.screens.detail.model.MovieDetailUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,9 +19,9 @@ class MovieDetailViewModel(
     private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<UiState<MovieDetailUiModel>> =
-        MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState<MovieDetailUiModel>>
+    private val _uiState: MutableStateFlow<MovieDetailUiState> =
+        MutableStateFlow(MovieDetailUiState())
+    val uiState: StateFlow<MovieDetailUiState>
         get() = _uiState
 
     init {
@@ -35,12 +34,15 @@ class MovieDetailViewModel(
                 .invoke(movieId)
                 .catch {
                     _uiState.update {
-                        UiState.Error("Failed to load data")
+                        it.copy(status = Status.Error)
                     }
                 }
                 .collect { data ->
                     _uiState.update {
-                        UiState.Success(data.toUiModel())
+                        it.copy(
+                            data = data?.toUiModel(),
+                            status = if (data != null) Status.Success else Status.Error,
+                        )
                     }
                 }
         }

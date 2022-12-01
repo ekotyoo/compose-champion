@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">ComposeChampion</string>
+    <string name="app_name">Movie App</string>
     <string name="desc_favorite_button">Toggle favorite button</string>
     <string name="desc_about_button">Navigate to about screen button</string>
     <string name="desc_scroll_top_button">Scroll to top button</string>
-    <string name="label_search_movie">Cari film</string>
-    <string name="desc_movie_not_found">Film tidak ditemukan</string>
+    <string name="label_search_movie">Search movie</string>
+    <string name="desc_movie_not_found">Movie not found</string>
     <string name="label_overview">Overview</string>
     <string name="label_cast">Casts</string>
     <string name="desc_back_button">Navigate back</string>

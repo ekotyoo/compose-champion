@@ -5,5 +5,5 @@ import com.ekotyoo.composechampion.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetMovieDetailUseCase(private val movieRepository: MovieRepository) {
-    fun invoke(movieId: String): Flow<MovieDetail> = movieRepository.getMovieDetail(movieId)
+    fun invoke(movieId: String): Flow<MovieDetail?> = movieRepository.getMovieDetail(movieId)
 }
