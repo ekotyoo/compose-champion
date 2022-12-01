@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.composechampion.R
-import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.ui.screens.home.components.SearchHeader
 import com.ekotyoo.composechampion.ui.screens.home.components.MovieCard
 import com.ekotyoo.composechampion.ui.screens.home.model.MovieListItemUiModel
