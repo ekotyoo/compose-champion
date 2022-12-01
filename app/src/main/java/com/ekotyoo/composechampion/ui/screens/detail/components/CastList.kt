@@ -25,7 +25,7 @@ fun CastList(
         Spacer(modifier = Modifier.height(8.dp))
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             items(casts) {
-                CastCard(name = it.name, playedAs = "Unknown", image = it.image)
+                CastCard(name = it.name, playedAs = it.playedAs, image = it.image)
             }
         }
     }
