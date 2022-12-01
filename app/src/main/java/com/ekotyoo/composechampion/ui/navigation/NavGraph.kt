@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.ekotyoo.composechampion.di.Injection
 import com.ekotyoo.composechampion.ui.screens.about.AboutScreen
 import com.ekotyoo.composechampion.ui.screens.detail.MovieDetailScreen
+import com.ekotyoo.composechampion.ui.screens.detail.MovieDetailViewModel
 import com.ekotyoo.composechampion.ui.screens.home.HomeScreen
 import com.ekotyoo.composechampion.ui.screens.home.HomeViewModel
 
@@ -30,12 +31,21 @@ fun NavGraphBuilder.createNavGraph(navController: NavHostController) {
         )
     }
     composable(Screen.About.route) {
-        AboutScreen()
+        AboutScreen(onNavigateBack = { navController.navigateUp() })
     }
     composable(Screen.MovieDetail.route) {
-        val args = it.arguments?.getString("movieId")
-        if (args != null) {
-            MovieDetailScreen(movieId = args)
+        val movieId = it.arguments?.getString("movieId")
+        if (movieId != null) {
+            MovieDetailScreen(
+                viewModel = viewModel(
+                    factory = MovieDetailViewModel.Factory(
+                        movieId,
+                        Injection.provideGetMovieDetailUseCase(),
+                        Injection.provideAddMoveToFavoriteUseCase(),
+                    ),
+                ),
+                onNavigateBack = { navController.navigateUp() }
+            )
         }
     }
 }
