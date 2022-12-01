@@ -27,10 +27,18 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel,
+    snackbarHostState: SnackbarHostState,
     onNavigateToAboutScreen: () -> Unit,
     onNavigateToDetailScreen: (String) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
+
+    state.message?.let {
+        LaunchedEffect(it) {
+            snackbarHostState.showSnackbar(message = it)
+            viewModel.messageShown()
+        }
+    }
 
     HomeScreen(
         searchQuery = state.searchQuery,

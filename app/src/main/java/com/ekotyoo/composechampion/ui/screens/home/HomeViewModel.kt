@@ -3,7 +3,6 @@ package com.ekotyoo.composechampion.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.domain.usecase.AddMovieToFavoriteUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMoviesUseCase
 import com.ekotyoo.composechampion.ui.mapper.toUiModel
@@ -31,18 +30,18 @@ class HomeViewModel(
     }
 
     private fun searchMovies(query: String) {
-        _uiState.update { it.copy(status = Status.Loading) }
+        _uiState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
             getMoviesUseCase
                 .invoke(query)
-                .catch {
-                    _uiState.update { it.copy(status = Status.Error) }
+                .catch { e ->
+                    _uiState.update { it.copy(message = e.message) }
                 }
                 .collect { data ->
                     _uiState.update { state ->
                         state.copy(
-                            status = Status.Success,
+                            isLoading = false,
                             data = data.map { d -> d.toUiModel() }
                         )
                     }
@@ -55,6 +54,12 @@ class HomeViewModel(
             addMovieToFavoriteUseCase.invoke(movieId, !isFavorite).collect { success ->
                 if (success) searchMovies(_uiState.value.searchQuery)
             }
+        }
+    }
+
+    fun messageShown() {
+        _uiState.update {
+            it.copy(message = null)
         }
     }
 
