@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ekotyoo.composechampion.R
-import com.ekotyoo.composechampion.common.BackButton
+import com.ekotyoo.composechampion.common.components.BackButton
 
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier, onNavigateBack: () -> Unit) {

@@ -19,8 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ekotyoo.composechampion.R
-import com.ekotyoo.composechampion.common.BackButton
-import com.ekotyoo.composechampion.common.UiState
+import com.ekotyoo.composechampion.common.components.BackButton
 import com.ekotyoo.composechampion.ui.screens.detail.components.CastList
 import com.ekotyoo.composechampion.ui.screens.detail.components.MovieHeader
 import com.ekotyoo.composechampion.ui.screens.detail.components.MovieOverview

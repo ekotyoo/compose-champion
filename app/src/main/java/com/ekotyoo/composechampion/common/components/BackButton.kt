@@ -1,4 +1,4 @@
-package com.ekotyoo.composechampion.common
+package com.ekotyoo.composechampion.common.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
