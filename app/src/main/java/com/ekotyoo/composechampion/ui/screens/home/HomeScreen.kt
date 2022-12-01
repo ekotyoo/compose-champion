@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ekotyoo.composechampion.R
-import com.ekotyoo.composechampion.common.UiState
+import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.ui.screens.home.components.SearchHeader
 import com.ekotyoo.composechampion.ui.screens.home.components.MovieCard
 import com.ekotyoo.composechampion.ui.screens.home.model.MovieListItemUiModel
@@ -30,26 +30,17 @@ fun HomeScreen(
     onNavigateToAboutScreen: () -> Unit,
     onNavigateToDetailScreen: (String) -> Unit,
 ) {
+    val state by viewModel.uiState.collectAsState()
 
-    val searchQuery by viewModel.searchQuery.collectAsState()
-
-    viewModel.uiState.collectAsState().value.let { state ->
-        when (state) {
-            is UiState.Error -> {}
-            is UiState.Loading -> {}
-            is UiState.Success -> {
-                HomeScreen(
-                    searchQuery = searchQuery,
-                    modifier = modifier,
-                    movies = state.data,
-                    onNavigateToAboutScreen = onNavigateToAboutScreen,
-                    onNavigateToDetailScreen = onNavigateToDetailScreen,
-                    onSearchValueChange = viewModel::onQueryChanged,
-                    onFavoriteClick = viewModel::addMovieToFavorite
-                )
-            }
-        }
-    }
+    HomeScreen(
+        searchQuery = state.searchQuery,
+        modifier = modifier,
+        movies = state.data,
+        onNavigateToAboutScreen = onNavigateToAboutScreen,
+        onNavigateToDetailScreen = onNavigateToDetailScreen,
+        onSearchValueChange = viewModel::onQueryChanged,
+        onFavoriteClick = viewModel::addMovieToFavorite
+    )
 }
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)

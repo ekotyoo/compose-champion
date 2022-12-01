@@ -3,11 +3,10 @@ package com.ekotyoo.composechampion.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.composechampion.common.UiState
-import com.ekotyoo.composechampion.ui.mapper.toUiModel
+import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.domain.usecase.AddMovieToFavoriteUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMoviesUseCase
-import com.ekotyoo.composechampion.ui.screens.home.model.MovieListItemUiModel
+import com.ekotyoo.composechampion.ui.mapper.toUiModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -16,36 +15,36 @@ class HomeViewModel(
     private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<UiState<List<MovieListItemUiModel>>> =
-        MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState<List<MovieListItemUiModel>>>
+    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState>
         get() = _uiState
 
-    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
-    val searchQuery: StateFlow<String>
-        get() = _searchQuery
-
     init {
-        searchMovies("")
+        searchMovies(_uiState.value.searchQuery)
     }
 
-    fun onQueryChanged(query: String)  {
-        _searchQuery.update { query }
+    fun onQueryChanged(query: String) {
+        _uiState.update {
+            it.copy(searchQuery = query)
+        }
         searchMovies(query)
     }
 
     private fun searchMovies(query: String) {
+        _uiState.update { it.copy(status = Status.Loading) }
+
         viewModelScope.launch {
             getMoviesUseCase
                 .invoke(query)
                 .catch {
-                    _uiState.update {
-                        UiState.Error("Failed to load data")
-                    }
+                    _uiState.update { it.copy(status = Status.Error) }
                 }
                 .collect { data ->
-                    _uiState.update {
-                        UiState.Success(data.map { it.toUiModel() })
+                    _uiState.update { state ->
+                        state.copy(
+                            status = Status.Success,
+                            data = data.map { d -> d.toUiModel() }
+                        )
                     }
                 }
         }
@@ -54,7 +53,7 @@ class HomeViewModel(
     fun addMovieToFavorite(movieId: String, isFavorite: Boolean) {
         viewModelScope.launch {
             addMovieToFavoriteUseCase.invoke(movieId, !isFavorite).collect { success ->
-                if (success) searchMovies(_searchQuery.value)
+                if (success) searchMovies(_uiState.value.searchQuery)
             }
         }
     }
