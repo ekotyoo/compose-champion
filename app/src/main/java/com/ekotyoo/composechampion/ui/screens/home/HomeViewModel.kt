@@ -38,10 +38,12 @@ class HomeViewModel(
                 .catch { e ->
                     _uiState.update { it.copy(message = e.message) }
                 }
+                .onCompletion {
+                    _uiState.update { it.copy(isLoading = false) }
+                }
                 .collect { data ->
                     _uiState.update { state ->
                         state.copy(
-                            isLoading = false,
                             data = data.map { d -> d.toUiModel() }
                         )
                     }
