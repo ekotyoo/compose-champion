@@ -92,7 +92,7 @@ fun MovieCard(
                 Icon(
                     imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Outlined.Favorite,
                     contentDescription = stringResource(id = R.string.desc_favorite_button),
-                    tint = if (isFavorite) Red40 else Color.Unspecified
+                    tint = if (isFavorite) Red40 else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
