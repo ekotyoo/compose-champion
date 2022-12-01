@@ -39,6 +39,7 @@ fun NavGraphBuilder.createNavGraph(navController: NavHostController, snackbarHos
         val movieId = it.arguments?.getString("movieId")
         if (movieId != null) {
             MovieDetailScreen(
+                snackbarHostState = snackbarHostState,
                 viewModel = viewModel(
                     factory = MovieDetailViewModel.Factory(
                         movieId,

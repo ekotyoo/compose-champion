@@ -3,14 +3,10 @@ package com.ekotyoo.composechampion.ui.screens.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.ekotyoo.composechampion.common.Status
 import com.ekotyoo.composechampion.domain.usecase.AddMovieToFavoriteUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMovieDetailUseCase
 import com.ekotyoo.composechampion.ui.mapper.toUiModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
@@ -29,20 +25,25 @@ class MovieDetailViewModel(
     }
 
     private fun getMovieDetail(movieId: String) {
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             getMovieDetailUseCase
                 .invoke(movieId)
-                .catch {
+                .catch { e ->
                     _uiState.update {
-                        it.copy(status = Status.Error)
+                        it.copy(message = e.message)
                     }
+                }
+                .onCompletion {
+                    _uiState.update { it.copy(isLoading = false) }
                 }
                 .collect { data ->
                     _uiState.update {
-                        it.copy(
-                            data = data?.toUiModel(),
-                            status = if (data != null) Status.Success else Status.Error,
-                        )
+                        return@update if (data != null) {
+                            it.copy(data = data.toUiModel())
+                        } else {
+                            it.copy(message = "Failed to load movie")
+                        }
                     }
                 }
         }
@@ -53,6 +54,12 @@ class MovieDetailViewModel(
             addMovieToFavoriteUseCase.invoke(movieId, !isFavorite).collect { success ->
                 if (success) getMovieDetail(movieId)
             }
+        }
+    }
+
+    fun messageShown() {
+        _uiState.update {
+            it.copy(message = null)
         }
     }
 

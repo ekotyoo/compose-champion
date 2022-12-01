@@ -26,6 +26,7 @@ import com.ekotyoo.composechampion.ui.theme.ComposeChampionTheme
 
 @Composable
 fun MovieDetailScreen(
+    snackbarHostState: SnackbarHostState,
     viewModel: MovieDetailViewModel,
     onNavigateBack: () -> Unit,
 ) {
@@ -39,7 +40,15 @@ fun MovieDetailScreen(
         )
     } else {
         LaunchedEffect(true) {
+            snackbarHostState.showSnackbar(message = "Failed to load movie data")
             onNavigateBack()
+        }
+    }
+
+    state.message?.let {
+        LaunchedEffect(it) {
+            snackbarHostState.showSnackbar(message = it)
+            viewModel.messageShown()
         }
     }
 }
