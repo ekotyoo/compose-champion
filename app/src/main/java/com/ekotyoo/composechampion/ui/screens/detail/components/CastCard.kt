@@ -3,6 +3,7 @@ package com.ekotyoo.composechampion.ui.screens.detail.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -24,25 +25,29 @@ fun CastCard(
     image: String,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier.width(100.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             model = image,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(CircleShape)
-                .background(Color.Red)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
                 .size(50.dp)
         )
         Text(
             text = name,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
+            textAlign = TextAlign.Center,
+            maxLines = 2
         )
         Text(
             text = playedAs,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f),
+            textAlign = TextAlign.Center,
+            maxLines = 2
         )
     }
 }
