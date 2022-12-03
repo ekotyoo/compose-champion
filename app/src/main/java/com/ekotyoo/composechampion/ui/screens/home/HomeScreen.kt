@@ -85,6 +85,7 @@ fun HomeScreen(
                         text = stringResource(id = R.string.desc_movie_not_found),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.5f),
                     )
                 }
             } else {

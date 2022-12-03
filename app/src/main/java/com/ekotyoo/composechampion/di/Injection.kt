@@ -4,6 +4,7 @@ import com.ekotyoo.composechampion.data.fake.FakeMovieDataSource
 import com.ekotyoo.composechampion.data.repository.FakeMovieRepositoryImpl
 import com.ekotyoo.composechampion.domain.repository.MovieRepository
 import com.ekotyoo.composechampion.domain.usecase.AddMovieToFavoriteUseCase
+import com.ekotyoo.composechampion.domain.usecase.GetFavoriteMoviesUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMovieDetailUseCase
 import com.ekotyoo.composechampion.domain.usecase.GetMoviesUseCase
 
@@ -21,4 +22,7 @@ object Injection {
         GetMovieDetailUseCase(provideMovieRepository())
 
     fun provideGetMoviesUseCase(): GetMoviesUseCase = GetMoviesUseCase(provideMovieRepository())
+
+    fun provideGetFavoriteMoviesUseCase(): GetFavoriteMoviesUseCase =
+        GetFavoriteMoviesUseCase(provideMovieRepository())
 }

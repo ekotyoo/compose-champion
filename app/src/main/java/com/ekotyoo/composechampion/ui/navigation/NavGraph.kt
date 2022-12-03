@@ -7,18 +7,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.ekotyoo.composechampion.di.Injection
 import com.ekotyoo.composechampion.ui.screens.about.AboutScreen
+import com.ekotyoo.composechampion.ui.screens.about.AboutViewModel
 import com.ekotyoo.composechampion.ui.screens.detail.MovieDetailScreen
 import com.ekotyoo.composechampion.ui.screens.detail.MovieDetailViewModel
 import com.ekotyoo.composechampion.ui.screens.home.HomeScreen
 import com.ekotyoo.composechampion.ui.screens.home.HomeViewModel
 
-fun NavGraphBuilder.createNavGraph(navController: NavHostController, snackbarHostState: SnackbarHostState) {
+fun NavGraphBuilder.createNavGraph(
+    navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
+) {
     composable(Screen.Home.route) {
         HomeScreen(
             snackbarHostState = snackbarHostState,
             viewModel = viewModel(factory = HomeViewModel.Factory(
-                getMoviesUseCase = Injection.provideGetMoviesUseCase(),
-                addMovieToFavoriteUseCase = Injection.provideAddMoveToFavoriteUseCase(),
+                Injection.provideGetMoviesUseCase(),
+                Injection.provideAddMoveToFavoriteUseCase(),
             )),
             onNavigateToAboutScreen = {
                 navController.navigate(Screen.About.route) {
@@ -33,7 +37,21 @@ fun NavGraphBuilder.createNavGraph(navController: NavHostController, snackbarHos
         )
     }
     composable(Screen.About.route) {
-        AboutScreen(onNavigateBack = { navController.navigateUp() })
+        AboutScreen(
+            onNavigateBack = { navController.navigateUp() },
+            onNavigateToDetail = {
+                navController.navigate(Screen.MovieDetail.routeFromId(it)) {
+                    launchSingleTop = true
+                }
+            },
+            snackbarHostState = snackbarHostState,
+            viewModel = viewModel(
+                factory = AboutViewModel.Factory(
+                    Injection.provideGetFavoriteMoviesUseCase(),
+                    Injection.provideAddMoveToFavoriteUseCase(),
+                ),
+            ),
+        )
     }
     composable(Screen.MovieDetail.route) {
         val movieId = it.arguments?.getString("movieId")

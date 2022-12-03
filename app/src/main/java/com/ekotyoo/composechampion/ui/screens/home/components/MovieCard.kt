@@ -3,15 +3,14 @@ package com.ekotyoo.composechampion.ui.screens.home.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ekotyoo.composechampion.R
 import com.ekotyoo.composechampion.ui.theme.ComposeChampionTheme
-import com.ekotyoo.composechampion.ui.theme.Red40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +53,7 @@ fun MovieCard(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight(),
+                    .fillMaxHeight()
             ) {
                 Text(
                     text = title,
@@ -68,16 +66,16 @@ fun MovieCard(
                     style = MaterialTheme.typography.labelMedium,
                     maxLines = 2, overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.fillMaxHeight())
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Star,
-                        tint = MaterialTheme.colorScheme.secondary,
                         contentDescription = null,
                         modifier = Modifier.size(20.dp)
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         String.format("%.1f", rating),
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
@@ -90,9 +88,8 @@ fun MovieCard(
                     .align(Alignment.CenterVertically),
             ) {
                 Icon(
-                    imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Outlined.Favorite,
+                    imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                     contentDescription = stringResource(id = R.string.desc_favorite_button),
-                    tint = if (isFavorite) Red40 else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
