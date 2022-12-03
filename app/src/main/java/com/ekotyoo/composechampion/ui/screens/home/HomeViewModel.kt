@@ -15,8 +15,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState>
-        get() = _uiState
+    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
         searchMovies(_uiState.value.searchQuery)

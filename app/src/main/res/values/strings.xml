@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Movie App</string>
     <string name="desc_favorite_button">Toggle favorite button</string>
     <string name="desc_about_button">Navigate to about screen button</string>
@@ -10,9 +10,8 @@
     <string name="desc_back_button">Navigate back</string>
     <string name="label_add_to_favorite">Add to Favorite</string>
     <string name="label_remove_from_favorite">Remove From Favorite</string>
-    <string name="label_about">About</string>
     <string name="url_profile_picture"><![CDATA[https://media-exp1.licdn.com/dms/image/C4D03AQE_JwbN9U6zYw/profile-displayphoto-shrink_800_800/0/1623583406569?e=1675296000&v=beta&t=NM2JueahvwHTizZ4DmU1mLD1_oTKnrArj0LAFLaitqU]]></string>
-    <string name="url_profile_cover_picture"><![CDATA[https://images.unsplash.com/photo-1670007770799-8ae5d669c923?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80]]></string>
+    <string name="url_profile_cover_picture" tools:ignore="TypographyDashes"><![CDATA[https://images.unsplash.com/photo-1670007770799-8ae5d669c923?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80]]></string>
     <string name="label_profile_name">Eko Prasetyo</string>
     <string name="label_profile_email">ekeprasetyo@gmail.com</string>
     <string name="label_favorite_movies">Favorite Movies</string>

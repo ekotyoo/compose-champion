@@ -15,8 +15,7 @@ class AboutViewModel(
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<AboutUiState> = MutableStateFlow(AboutUiState())
-    val uiState: StateFlow<AboutUiState>
-        get() = _uiState
+    val uiState: StateFlow<AboutUiState> = _uiState.asStateFlow()
 
     init {
         getFavoriteMovies()

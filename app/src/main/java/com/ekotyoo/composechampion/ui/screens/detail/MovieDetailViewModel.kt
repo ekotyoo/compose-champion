@@ -17,8 +17,7 @@ class MovieDetailViewModel(
 
     private val _uiState: MutableStateFlow<MovieDetailUiState> =
         MutableStateFlow(MovieDetailUiState())
-    val uiState: StateFlow<MovieDetailUiState>
-        get() = _uiState
+    val uiState: StateFlow<MovieDetailUiState> = _uiState.asStateFlow()
 
     init {
         getMovieDetail(movieId)
